@@ -29,6 +29,7 @@ class TestHabitant(unittest.TestCase):
         self.assertEqual(h1.compte_animal("moutons"),0)
 
 class TestVillage(unittest.TestCase):
+    """Tests pour la classe Village."""
     def test_ajout_agrégation_valide(self):
         pytown = Village("PyTown")
         h1 = Habitant("Aldric", 25, "Rue A", {"vaches": 3})
@@ -45,6 +46,7 @@ class TestVillage(unittest.TestCase):
         self.assertEqual(pytown.get_habitants()[0],h1) and self.assertEqual(v2.get_habitants()[0],h1)
 
 class TestHeritage(unittest.TestCase):
+    """Tests pour la classe Heritage."""
     def test_calcul_retraite(self):
         adulte = Adulte("Dupont", "Marie", 35, "Rue A")
         try:
