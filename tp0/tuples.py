@@ -1,8 +1,10 @@
-def afficher_releve(tuple):
-    texte = f"Capteur {tuple[0]} : {str(tuple[1])} {tuple[2]}"
+def afficher_releve(mesure):
+    """Affiche les valeurs du tuple"""
+    texte = f"Capteur {mesure[0]} : {str(mesure[1])} {mesure[2]}"
     return texte
 
 def recalibrer(liste, capteur, val):
+    """Modifie la valeur d'un capteur"""
     for i in range(len(liste)-1):
         liste[i] = list(liste[i])
         if liste[i][0] == capteur:
