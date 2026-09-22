@@ -1,3 +1,5 @@
+from multipledispatch import dispatch
+
 class Habitant():
     """Classe Habitants"""
     def __init__(self, nom, age, adresse, animaux=None):
@@ -46,6 +48,15 @@ class Habitant():
     def compte_animal(self, animal):
         """Renvoie le nombre d'un animal donné"""
         return self.__animaux.get(animal,0)
+    
+@dispatch(object,str)
+def set_info(habitant,nom):
+    habitant._Habitant_nom = nom
+
+@dispatch(object,str,int)
+def set_info(habitant,nom,age):
+    habitant._Habitant_nom = nom
+    habitant._Habitant_age = age
 
 h1 = Habitant("Aldric", 25, "Rue A", {"vaches": 3})
 assert h1.get_nom() == "Aldric"
@@ -60,3 +71,7 @@ try:
     assert False, "une ValueError aurait du etre levee"
 except ValueError:
     pass
+
+h2 = Habitant("Bob", 40, "Rue C")
+set_info(h2, "Robert") # met a jour le nom seulement
+set_info(h2, "Robert", 41) # met a jour le nom et l’age
