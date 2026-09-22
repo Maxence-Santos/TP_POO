@@ -3,17 +3,21 @@ from abc import ABC, abstractmethod
 
 class Habitant(ABC):
     """Classe Habitants"""
-    def __init__(self, nom, prenom, age):
+    def __init__(self, nom, prenom, age, adresse):
         """Constructeur"""
         self.__nom = nom
         self.__prenom = prenom
         self.__age = age
+        self.__adresse = adresse
     
     def get_nom(self):
         return self.__nom
 
     def get_prenom(self):
         return self.__prenom
+    
+    def get_adresse(self):
+        return self.__adresse
     
     @property
     def age(self):
@@ -25,6 +29,9 @@ class Habitant(ABC):
     def set_prenom(self,prenom):
         self.__prenom = prenom
     
+    def set_adresse(self,adresse):
+        self.__adresse = adresse
+    
     @age.setter
     def age(self,age):
         if age < 0 or age > 130:
@@ -34,13 +41,17 @@ class Habitant(ABC):
     
     @abstractmethod
     def calcul_nombre_annee_avant_retraite(self):
-        pass
+        """Classe abstraite"""
+        
+    
+    def __str__(self):
+        return f"{self.__prenom} {self.__nom}, habite à {self.__adresse}\n"
 
 class Adulte(Habitant):
-    def __init__(self, nom, prenom, age):
+    def __init__(self, nom, prenom, age, adresse):
         if age < 18:
             raise ValueError("Un adulte doit avoir au moins 18 ans")
-        super().__init__(nom, prenom, age)
+        super().__init__(nom, prenom, age, adresse)
 
     def calcul_nombre_annee_avant_retraite(self):
         age_retraite = 62
@@ -50,11 +61,11 @@ class Adulte(Habitant):
             return age_retraite - self.age
 
 class Enfant(Habitant):
-    def __init__(self, nom, prenom, age):
+    def __init__(self, nom, prenom, age, adresse):
         if age >= 18:
             raise ValueError("Un enfant doit avoir moins de 18 ans")
 
-        super().__init__(nom, prenom, age)
+        super().__init__(nom, prenom, age, adresse)
     def calcul_nombre_annee_avant_retraite(self):
         return "Erreur: Un enfant ne peut pas calculer sa retraite"
 
@@ -67,13 +78,25 @@ def set_info(habitant,nom,age):
     habitant._Habitant_nom = nom
     habitant._Habitant_age = age
 
-adulte = Adulte("Dupont", "Marie", 35)
-enfant = Enfant("Martin", "Lucas", 12)
+
+def affichage(h: Habitant):
+    """Fonction qui affiche un habitant"""
+    print(str(h))
+
+adulte = Adulte("Dupont", "Marie", 35, "Rue A")
+enfant = Enfant("Martin", "Lucas", 12, "Rue B")
 assert isinstance(adulte, Habitant)
 assert adulte.calcul_nombre_annee_avant_retraite() == 27
 assert "enfant" in enfant.calcul_nombre_annee_avant_retraite()
 try:
-    Enfant("Nom", "Prénom", 25)
+    Enfant("Nom", "Prénom", 25, "Rue C")
     assert False, "une ValueError aurait du etre levee"
 except ValueError:
     pass
+
+print(adulte)
+print(enfant)
+affichage(adulte)
+affichage(enfant)
+
+"Rendre la méthode abstraite oblige chaque classe fille à la redéfinir, ce qui renforce la sécurité du polymorphisme car l'implémentation sera réellement adaptée"
