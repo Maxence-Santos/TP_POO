@@ -16,7 +16,7 @@ class Village:
     
     def afficher_habitants(self):
         for hab in self.__habitants:
-            print(f"{self.__habitants.__nom}\n")
+            print(f"{hab.get_nom()}\n")
     
     def get_habitants(self):
         return self.__habitants
